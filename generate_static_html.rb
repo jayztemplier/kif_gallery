@@ -28,13 +28,13 @@ images.each do |image_file|
   gallery_html.concat html
 end
 
-file = File.open("template.html", "rb")
+file = File.open(Dir.pwd + "/template.html", "rb")
 contents = file.read
 
 to_replace = "[ruby [images]]"
 contents.gsub! to_replace, gallery_html
 
-out_file = File.new("index.html", "w")
+out_file = File.new(Dir.pwd + "/index.html", "w")
 out_file.puts(contents)
 out_file.close
 
