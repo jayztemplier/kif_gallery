@@ -3,6 +3,7 @@
 puts "GENERATING STATIC HTML PAGE"
 images = []
 path = ENV['KIF_SCREENSHOTS']
+root_path = File.expand_path File.dirname(__FILE__)
 
 %x[rm -rf img]
 %x[cp -R $KIF_SCREENSHOTS img]
@@ -28,13 +29,13 @@ images.each do |image_file|
   gallery_html.concat html
 end
 
-file = File.open(Dir.pwd + "/template.html", "rb")
+file = File.open(root_path + "/template.html", "rb")
 contents = file.read
 
 to_replace = "[ruby [images]]"
 contents.gsub! to_replace, gallery_html
 
-out_file = File.new(Dir.pwd + "/index.html", "w")
+out_file = File.new(root_path + "/index.html", "w")
 out_file.puts(contents)
 out_file.close
 
