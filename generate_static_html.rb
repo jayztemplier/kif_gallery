@@ -4,7 +4,10 @@ puts "GENERATING STATIC HTML PAGE"
 images = []
 path = ENV['KIF_SCREENSHOTS']
 
-Dir.glob("#{path}/*.png") do |image_file|
+%x[rm -rf img]
+%x[cp -R $KIF_SCREENSHOTS img]
+
+Dir.glob("img/*.png") do |image_file|
   images << image_file
 end
 puts "#{images.count} images found!"
@@ -31,8 +34,7 @@ contents = file.read
 to_replace = "[ruby [images]]"
 contents.gsub! to_replace, gallery_html
 
-puts "#{contents}"
-
 out_file = File.new("index.html", "w")
 out_file.puts(contents)
 out_file.close
+
