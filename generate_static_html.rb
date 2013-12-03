@@ -1,16 +1,22 @@
 #!/usr/bin/ruby
 
 puts "GENERATING STATIC HTML PAGE"
-images = []
+
 path = ENV['KIF_SCREENSHOTS']
 root_path = File.expand_path File.dirname(__FILE__)
+Dir.chdir(root_path)
+
 img_dir = root_path+"/img"
+puts "Image directory : #{img_dir}"
+puts "Screenshots directory : #{path}"
 
-%x[rm -rf img]
-%x[mkdir #{img_dir}]
-%x[cp -R $KIF_SCREENSHOTS #{img_dir}]
+puts %x[rm -rf #{img_dir}]
+puts %x[mkdir #{img_dir}]
+puts %x[cp -R $KIF_SCREENSHOTS/* #{img_dir}]
 
-Dir.glob("#{img_dir}/*.png") do |image_file|
+images = []
+puts "Current dir : #{Dir.pwd}"
+Dir.glob("img/*") do |image_file|
   images << image_file
 end
 puts "#{images.count} images found!"
