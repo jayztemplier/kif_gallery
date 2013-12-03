@@ -4,11 +4,13 @@ puts "GENERATING STATIC HTML PAGE"
 images = []
 path = ENV['KIF_SCREENSHOTS']
 root_path = File.expand_path File.dirname(__FILE__)
+img_dir = root_path+"/img"
 
 %x[rm -rf img]
-%x[cp -R $KIF_SCREENSHOTS img]
+%x[mkdir #{img_dir}]
+%x[cp -R $KIF_SCREENSHOTS #{img_dir}]
 
-Dir.glob("img/*.png") do |image_file|
+Dir.glob("#{img_dir}/*.png") do |image_file|
   images << image_file
 end
 puts "#{images.count} images found!"
